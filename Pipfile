@@ -1,0 +1,11 @@
+[packages]
+
+[dev-packages]
+ruff = "*"
+pytest = "*"
+pytest-cov = "*"
+twine = "*"
+build = "*"
+
+[requires]
+python_version = "3.10"

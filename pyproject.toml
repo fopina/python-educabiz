@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0.0,<69.3.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# TODO: update with package name in pypi
+name = "fp-github-template-example"
+authors = [{name="Filipe Pina", email="shelf-corncob-said@duck.com" }]
+dynamic = ["version"]
+# TODO: one-line description of the package
+description = "package example"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.urls]
+# TODO: update this
+Homepage = "https://github.com/fopina/python-package-template"
+
+[project.scripts]
+# TODO: remove this if package is not a CLI or update it if it is
+admindocs-cli = "example.__main__:cli"
+
+[tool.setuptools.packages.find]
+# TODO: replace example with your package name
+include = ["example*"]
+
+[tool.setuptools.dynamic]
+# TODO: replace example with your package name
+version = {attr = "example.__version__"}
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+target-version = "py310"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = ["E4", "E7", "E9", "F", "I"]
+ignore = []
+
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+# TODO: replace
+source = ["example"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
