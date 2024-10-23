@@ -116,7 +116,7 @@ class Client(requests.Session):
         return self._schoolctrl_save_presence('savepresencein', child_id, date, is_enter=True)
 
 
-def main():
+def cli():
     dotenv.load_dotenv()
     c = Client()
     c.login(os.getenv('EDUCA_USERNAME'), os.getenv('EDUCA_PASSWORD'))
@@ -128,4 +128,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    cli()
