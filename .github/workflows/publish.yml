@@ -9,7 +9,6 @@ on:
       repository:
         type: string
         default: pypi
-        required: true
     secrets:
       twine_username:
         required: true
