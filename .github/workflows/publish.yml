@@ -8,6 +8,7 @@ on:
         required: true
       repository:
         type: string
+        default: pypi
         required: true
     secrets:
       twine_username:
@@ -22,7 +23,7 @@ jobs:
     uses: ./.github/workflows/test.yml
 
   publish:
-    name: publish to pypi
+    name: publish to ${{ inputs.repository }}
     runs-on: ubuntu-latest
     needs: test
     steps:
