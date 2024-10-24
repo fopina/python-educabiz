@@ -25,6 +25,7 @@ jobs:
           pip install -r reqs.txt
 
       - name: Lint check
+        id: lint-check
         # allow unit tests to run
         continue-on-error: true
         run: |
@@ -35,7 +36,7 @@ jobs:
           make test
       
       - name: Final check
-        if: failure()
+        if: ${{ steps.lint-check.outcome == 'failure' }}
         run: |
-          echo A previous step failed, check the build log
+          echo Lint check failed, check its log
           exit 1
