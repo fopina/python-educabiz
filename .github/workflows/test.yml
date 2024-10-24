@@ -37,4 +37,5 @@ jobs:
       - name: Final check
         if: failure()
         run: |
-          A previous step failed, check the build log
+          echo A previous step failed, check the build log
+          exit 1
