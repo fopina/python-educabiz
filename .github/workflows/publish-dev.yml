@@ -9,7 +9,6 @@ on:
 
 jobs:
   test_and_publish:
-    name: publish to test.pypi.org
     uses: ./.github/workflows/publish.yml
     with:
       version: '${{ github.run_number }}.0.0'
