@@ -1,20 +1,8 @@
-name: publish
-run-name: 
+name: 🚀 publish
 
 on:
-  workflow_call:
-    inputs:
-      version:
-        type: string
-        required: true
-      repository:
-        type: string
-        default: pypi
-    secrets:
-      twine_username:
-        required: true
-      twine_password:
-        required: true
+  release:
+    types: [created]
 
 jobs:
   test:
@@ -39,13 +27,13 @@ jobs:
           pip install pipenv
           pipenv requirements --dev > reqs.txt
           pip install -r reqs.txt
-      - name: force right version
+      - name: set dev version
         run: |
-          .github/change_version.py --set '${{ inputs.version }}'
+          .github/change_version.py --set '${{ github.run_number }}.0.0'
       - name: Build and publish
         env:
-          TWINE_USERNAME: ${{ secrets.twine_username }}
-          TWINE_PASSWORD: ${{ secrets.twine_password }}
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: |
           pyproject-build
-          twine upload --repository ${{ inputs.repository }} dist/*
+          twine upload dist/*
