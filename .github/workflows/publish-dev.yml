@@ -33,7 +33,7 @@ jobs:
           pip install -r reqs.txt
       - name: set dev version
         run: |
-          .github/change_version.py --set '{{github.run_number}}.0.0'
+          .github/change_version.py --set '${{ github.run_number }}.0.0'
       - name: Build and publish
         env:
           TWINE_USERNAME: ${{ secrets.TESTPYPI_USERNAME }}
