@@ -4,7 +4,9 @@ dephell did this but no longer maintained??
 """
 import argparse
 
-import toml
+# tomlkit over toml because it preserves format/comments :trophy:
+from tomlkit import dumps
+from tomlkit import parse
 
 
 def main():
@@ -19,13 +21,13 @@ def main():
             pyproject_content = f.read()
 
 
-        pipfile_data = toml.loads(pipfile_content)
-        pyproject_data = toml.loads(pyproject_content)
+        pipfile_data = parse(pipfile_content)
+        pyproject_data = parse(pyproject_content)
         pyproject_data['project']['dependencies'] = pipfile_data.get('packages', {})
 
         # Write the pyproject.toml file
         with open(pyproject_path, 'w') as f:
-            toml.dump(pyproject_data, f)
+            f.write(dumps(pyproject_data))
 
     # Convert Pipfile to pyproject.toml
     pipfile_to_pyproject('Pipfile', 'pyproject.toml')
