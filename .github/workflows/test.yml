@@ -1,9 +1,6 @@
 name: 👷 test image
 
 on:
-  push:
-    branches-ignore:
-      - main
   workflow_call:
 
 jobs:
