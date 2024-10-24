@@ -9,9 +9,7 @@ dynamic = ["version"]
 description = "API client for *.educabiz.com "
 readme = "README.md"
 requires-python = ">=3.10"
-
-[project.dependencies]
-requests = "*"
+dependencies = ['requests']
 
 [project.urls]
 Homepage = "https://github.com/fopina/python-educabiz"
