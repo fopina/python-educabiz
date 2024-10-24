@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/publish.yml
     with:
       version: '${{ github.run_number }}.0.0'
-      repository: testpypi
+      repository: pypi
     secrets:
       twine_username: ${{ secrets.TESTPYPI_USERNAME }}
       twine_password: ${{ secrets.TESTPYPI_TOKEN }}
