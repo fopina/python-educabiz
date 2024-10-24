@@ -1,5 +1,5 @@
 name: publish
-run-name: 
+run-name: publish to ${{ inputs.repository }}
 
 on:
   workflow_call:
@@ -10,6 +10,7 @@ on:
       repository:
         type: string
         default: pypi
+        required: true
     secrets:
       twine_username:
         required: true
