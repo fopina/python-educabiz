@@ -23,15 +23,10 @@ jobs:
           pip install pipenv
           pipenv install --dev
 
-      - name: lint check
+      - name: Lint check
         run: |
-          docker run --rm ghcr.io/fopina/defectdojo-toolkit:${{ steps.sanitize_branch.outputs.sanitized_branch }}  ruff check
+          make lint-check
 
-      - name: Build and push image - release
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          platforms: linux/amd64,linux/arm64
-          cache-from: ghcr.io/fopina/defectdojo-toolkit:latest-build-cache
-          tags: |
-            ghcr.io/fopina/defectdojo-toolkit:${{ steps.sanitize_branch.outputs.sanitized_branch }}
+      - name: Run unit tests
+        run: |
+          make test
