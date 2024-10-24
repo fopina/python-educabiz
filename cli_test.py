@@ -5,7 +5,6 @@ import os
 import dotenv
 
 from educabiz.client import Client
-from datetime import datetime
 
 
 def cli():

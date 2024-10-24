@@ -111,15 +111,15 @@ class Client(requests.Session):
 
     def schoolctrl_save_presence_in(self, child_id: str, date: date):
         return self._schoolctrl_save_presence('savepresencein', child_id, date, is_enter=True)
-    
+
     def child_check_in(self, child_id: str):
         """Check in kid in current day"""
         return self.schoolctrl_save_presence_in(child_id, datetime.now())
-    
+
     def child_check_out(self, child_id: str):
         """Check out kid in current day"""
         return self.schoolctrl_save_presence_out(child_id, datetime.now())
-    
+
     def child_absent(self, child_id: str, reason: str):
         """Leave note that kid is absent"""
         return self.schoolctrl_save_presence_note(child_id, datetime.now(), notes=reason)
