@@ -20,7 +20,6 @@ def main():
         with open(pyproject_path, 'r') as f:
             pyproject_content = f.read()
 
-
         pipfile_data = parse(pipfile_content)
         pyproject_data = parse(pyproject_content)
         pyproject_data['project']['dependencies'] = pipfile_data.get('packages', {})
