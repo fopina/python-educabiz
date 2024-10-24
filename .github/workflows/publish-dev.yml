@@ -31,10 +31,9 @@ jobs:
           pip install pipenv
           pipenv requirements --dev > reqs.txt
           pip install -r reqs.txt
-      # - name: set dev version
-      #   run: |
-      #     sed -i "s/^\(__version__.*\)'/\1.dev.${{github.run_number}}'/g" bulk_update_or_create/__version__.py
-      #     grep dev bulk_update_or_create/__version__.py
+      - name: set dev version
+        run: |
+          .github/change_version.py --set '{{github.run_number}}.0.0'
       - name: Build and publish
         env:
           TWINE_USERNAME: ${{ secrets.TESTPYPI_USERNAME }}
