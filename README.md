@@ -1,15 +1,15 @@
-# python package template
+# python-educabiz
 
-## Content
+API client to interact with [educabiz.com](https://www.educabiz.com) portals.
 
-* `pytest` for tests: `make test`
-* `ruff` for linting/formatting: `make lint` (replaces both `black` and `isort`)
-* `.github` with actions ready to test PRs and publish releases
+## Install
 
-## New project checklist
+```
+pip install ...WIP...
+```
 
-* [ ] Replace `example` with *the* package
-* [ ] Replace `LICENSE` if MIT does not apply
-* [ ] Search the project for `# TODO` to find the (minimum list of) places that need to be changed.
-* [ ] Add PYPI credentials to secrets
+## Usage
 
+```python
+...snippet from cli_test?...
+```

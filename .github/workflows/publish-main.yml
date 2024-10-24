@@ -1,0 +1,15 @@
+name: 🚀 publish
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  test_and_publish:
+    uses: ./.github/workflows/publish.yml
+    with:
+      version: ${{ github.ref_name }}
+    secrets:
+      twine_username: ${{ secrets.PYPI_USERNAME }}
+      twine_password: ${{ secrets.PYPI_TOKEN }}
