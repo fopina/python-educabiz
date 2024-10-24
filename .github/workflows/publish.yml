@@ -8,7 +8,6 @@ on:
         required: true
       repository:
         type: string
-        default: pypi
     secrets:
       twine_username:
         required: true
@@ -42,10 +41,24 @@ jobs:
       - name: force right version
         run: |
           .github/change_version.py --set '${{ inputs.version }}'
-      - name: Build and publish
+      - name: Build
+        run: pyproject-build
+      - name: Publish
         env:
           TWINE_USERNAME: ${{ secrets.twine_username }}
           TWINE_PASSWORD: ${{ secrets.twine_password }}
         run: |
           pyproject-build
           twine upload --repository ${{ inputs.repository }} dist/*
+      - name: highlight
+        run: |
+          INDEX=""
+          if [ "${{ inputs.repository }}" != "pypi" ]; then
+            INDEX=" -i ${{ inputs.repository }}"
+          fi
+          cat <<EOF >> ${GITHUB_STEP_SUMMARY}
+          \`educabiz\` uploaded to ${{ inputs.repository }}
+          \`\`\`
+          pip install${INDEX} educabiz==${{ inputs.version }}
+          \`\`\`
+          EOF
