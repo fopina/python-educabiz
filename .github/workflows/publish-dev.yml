@@ -5,8 +5,8 @@ name: publish dev
 
 on:
   push:
-    branches:
-      - develop
+    branches-ignore:
+      - main
 
 jobs:
   test:
