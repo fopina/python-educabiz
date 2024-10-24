@@ -1,5 +1,4 @@
 name: publish
-run-name: publish to ${{ inputs.repository }}
 
 on:
   workflow_call:
@@ -16,6 +15,8 @@ on:
         required: true
       twine_password:
         required: true
+
+run-name: publish to ${{ inputs.repository }}
 
 jobs:
   test:

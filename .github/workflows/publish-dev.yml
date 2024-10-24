@@ -15,4 +15,4 @@ jobs:
       repository: testpypi
     secrets:
       twine_username: ${{ secrets.TESTPYPI_USERNAME }}
-      twine_password: ${{ secrets.TESTPYPI_PASSWORD }}
+      twine_password: ${{ secrets.TESTPYPI_TOKEN }}
