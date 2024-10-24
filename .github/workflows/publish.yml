@@ -52,11 +52,12 @@ jobs:
           twine upload --repository ${{ inputs.repository }} dist/*
       - name: highlight
         run: |
-          echo '`educabiz` uploaded to ${{ inputs.repository }}' >> ${GITHUB_STEP_SUMMARY}
           INDEX=""
           if [ "${{ inputs.repository }}" != "pypi" ]; then
             INDEX=" -i ${{ inputs.repository }}"
           fi
+          cat <<EOF >> ${GITHUB_STEP_SUMMARY}
+          `educabiz` uploaded to ${{ inputs.repository }}
           ```
           pip install${INDEX} educabiz==${{ inputs.version }}
           ```
