@@ -5,8 +5,10 @@ name: publish dev
 
 on:
   push:
-    branches-ignore:
-      - main
+    branches:
+      - dev
+      - dev/*
+      - dev-*
 
 jobs:
   test:

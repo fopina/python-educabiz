@@ -2,6 +2,12 @@ name: 👷 test image
 
 on:
   workflow_call:
+  push:
+    branches-ignore:
+      # these are already tested by publish-dev
+      - dev
+      - dev/*
+      - dev-*
 
 jobs:
   build:
