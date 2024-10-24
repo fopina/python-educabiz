@@ -1,3 +1,7 @@
+#!/usr/bin/env -S python3 -u
+"""
+dephell did this but no longer maintained??
+"""
 import argparse
 
 import toml
