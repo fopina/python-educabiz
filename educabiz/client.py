@@ -1,5 +1,4 @@
 from datetime import date, datetime
-import json
 
 import requests
 
@@ -31,7 +30,9 @@ class Client(requests.Session):
         return r
 
     def login(self):
-        r = self.post('/mobile/login', login_if_required=False, data={'username': self._username, 'password': self._password})
+        r = self.post(
+            '/mobile/login', login_if_required=False, data={'username': self._username, 'password': self._password}
+        )
         r.raise_for_status()
         r = r.json()
         if r['status'] != 'ok':
