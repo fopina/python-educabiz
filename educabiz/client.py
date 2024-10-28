@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import json
 
 import requests
 
@@ -14,13 +15,23 @@ class Client(requests.Session):
         self._password = password
         self._relogin = login_if_required
 
-    def request(self, method, url, *a, **b):
+    def request(self, method, url, *a, login_if_required=True, **b):
         if url[0] == '/':
             url = f'{self.URL}{url}'
-        return super().request(method, url, *a, **b)
+        r = super().request(method, url, *a, **b)
+        if login_if_required and self._relogin:
+            try:
+                data = r.json()
+            except Exception:
+                return r
+            if data.get('formAction') == 'https://mobile.educabiz.com/authenticate':
+                self.login()
+                return super().request(method, url, *a, **b)
+
+        return r
 
     def login(self):
-        r = self.post('/mobile/login', data={'username': self._username, 'password': self._password})
+        r = self.post('/mobile/login', login_if_required=False, data={'username': self._username, 'password': self._password})
         r.raise_for_status()
         r = r.json()
         if r['status'] != 'ok':
@@ -82,9 +93,6 @@ class Client(requests.Session):
         r.raise_for_status()
         return r.json()
 
-    def _bool(self, b):
-        return 'true' if b else 'false'
-
     def _schoolctrl_save_presence(
         self,
         path: str,
@@ -102,9 +110,9 @@ class Client(requests.Session):
                 'colabId': '',
                 'date': date.strftime('%d-%m-%Y'),
                 'notes': notes,
-                'absent': self._bool(absent),
-                'isChecked': self._bool(is_checked),
-                'isEnter': self._bool(is_enter),
+                'absent': _bool(absent),
+                'isChecked': _bool(is_checked),
+                'isEnter': _bool(is_enter),
                 'numberDay': number_day,
                 'childId': child_id,
             },
@@ -132,3 +140,7 @@ class Client(requests.Session):
     def child_absent(self, child_id: str, reason: str):
         """Leave note that kid is absent"""
         return self.schoolctrl_save_presence_note(child_id, datetime.now(), notes=reason)
+
+
+def _bool(b):
+    return 'true' if b else 'false'

@@ -10,8 +10,7 @@ from educabiz.client import Client
 
 def cli():
     dotenv.load_dotenv()
-    c = Client(os.getenv('EDUCA_USERNAME'), os.getenv('EDUCA_PASSWORD'))
-    c.login()
+    c = Client(os.getenv('EDUCA_USERNAME'), os.getenv('EDUCA_PASSWORD'), login_if_required=True)
     data = c.home()
     print(f'School: {data["schoolname"]}')
     children = c.school_qrcodeinfo()['child']
