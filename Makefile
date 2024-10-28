@@ -1,10 +1,12 @@
 lint:
 	ruff format
 	ruff check --fix
+	pyproject-pipenv --fix
 
 lint-check:
 	ruff format --diff
 	ruff check
+	pyproject-pipenv
 
 test:
 	python -m pytest --cov

@@ -25,7 +25,10 @@ def cli():
         # [{'id': '42039492', 'hourIn': '11:57', 'hourOut': '--:--', 'notes': '', 'date': '2024-10-24 00:00:00.0', 'absent': False, 'presenceNumber': '1'}]
         # after absent
         # [{'id': '42039680', 'hourIn': '--:--', 'hourOut': '--:--', 'notes': 'Doente', 'date': '2024-10-24 00:00:00.0', 'absent': True, 'presenceNumber': '1'}]}
+        # after checkout
+        # [{'id': '42097384', 'hourIn': '09:53', 'hourOut': '09:54', 'notes': '', 'date': '2024-10-25 00:00:00.0', 'absent': False, 'presenceNumber': '1'}]}
         # print(c.child_check_in(child['id']))
+        # print(c.child_check_out(child['id']))
         # print(c.child_absent(child['id'], 'Doente'))
 
 
