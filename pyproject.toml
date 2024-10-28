@@ -50,7 +50,7 @@ line-ending = "auto"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q"
+addopts = "-ra -q --disable-socket"
 testpaths = [
     "tests",
 ]

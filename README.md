@@ -13,8 +13,7 @@ pip install educabiz
 ```python
 from educabiz.client import Client
 
-eb_client = Client()
-eb_client.login(username, password)
+eb_client = Client(username, password, login_if_required=True)
 data = eb_client.home()
 print(f'School: {data["schoolname"]}')
 children = eb_client.school_qrcodeinfo()['child']
