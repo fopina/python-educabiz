@@ -2,20 +2,29 @@ from datetime import date, datetime
 
 import requests
 
+from educabiz.exceptions import LoginFailedError
+
 
 class Client(requests.Session):
     URL = 'https://mobile.educabiz.com'
+
+    def __init__(self, username: str, password: str, login_if_required=False):
+        super().__init__()
+        self._username = username
+        self._password = password
+        self._relogin = login_if_required
 
     def request(self, method, url, *a, **b):
         if url[0] == '/':
             url = f'{self.URL}{url}'
         return super().request(method, url, *a, **b)
 
-    def login(self, username, password):
-        r = self.post('/mobile/login', data={'username': username, 'password': password})
+    def login(self):
+        r = self.post('/mobile/login', data={'username': self._username, 'password': self._password})
         r.raise_for_status()
         r = r.json()
-        assert r['status'] == 'ok'
+        if r['status'] != 'ok':
+            raise LoginFailedError()
         return r
 
     def home(self):
