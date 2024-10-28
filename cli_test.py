@@ -1,5 +1,6 @@
 #!/usr/bin/env -S python3 -u
 
+import html
 import os
 
 import dotenv
@@ -13,20 +14,23 @@ def cli():
     c.login(os.getenv('EDUCA_USERNAME'), os.getenv('EDUCA_PASSWORD'))
     data = c.home()
     print(f'School: {data["schoolname"]}')
-    for child_id, child in data['children'].items():
-        print(f'{child_id}:')
-        print(f'* Name: {child["name"]}')
     children = c.school_qrcodeinfo()['child']
     for child in children.values():
-        print(child)
-        assert len(child['presence']) == 1
-        assert child['presence'][0]['id'] == 'undefined'
-        # after check-in!
-        # [{'id': '42039492', 'hourIn': '11:57', 'hourOut': '--:--', 'notes': '', 'date': '2024-10-24 00:00:00.0', 'absent': False, 'presenceNumber': '1'}]
-        # after absent
-        # [{'id': '42039680', 'hourIn': '--:--', 'hourOut': '--:--', 'notes': 'Doente', 'date': '2024-10-24 00:00:00.0', 'absent': True, 'presenceNumber': '1'}]}
-        # print(c.child_check_in(child['id']))
-        # print(c.child_absent(child['id'], 'Doente'))
+        child_id = child['id']
+        home_data = data['children'][child_id]
+        print(f'{child_id}:')
+        print(f'* Name: {html.unescape(child["name"])}')
+        print(f'* Photo URL: {home_data["photo"]}')
+        presence = child['presence'][0]
+        if presence['id'] == 'undefined':
+            presence_str = '(none)'
+        elif presence['absent']:
+            presence_str = f'absent ({presence["notes"]})'
+        elif presence['hourOut'] == '--:--':
+            presence_str = f'checked in at {presence["hourIn"]}'
+        else:
+            presence_str = f'checked in at {presence["hourIn"]} and out at {presence["hourOut"]}'
+        print(f'* Presence: {presence_str}')
 
 
 if __name__ == '__main__':

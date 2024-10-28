@@ -8,8 +8,7 @@ pytest-cov = "*"
 twine = "*"
 build = "*"
 python-dotenv = "*"
-toml = "*"
-tomlkit = "*"
+pyproject-pipenv = "*"
 
 [requires]
 python_version = "3.10"
