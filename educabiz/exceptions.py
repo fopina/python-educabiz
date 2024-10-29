@@ -4,3 +4,7 @@ class ClientError(Exception):
 
 class LoginFailedError(ClientError):
     """Login invalid"""
+
+
+class LoginRequiredError(ClientError):
+    """Missing or expired session"""
