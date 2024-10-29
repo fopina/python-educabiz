@@ -11,8 +11,7 @@ from pydantic import BaseModel, field_validator
 
 
 class PresenceItem(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     id: str
     notes: str = ''
@@ -28,8 +27,7 @@ class PresenceItem(BaseModel):
 
 
 class Child(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     id: str
     name: str
@@ -43,8 +41,7 @@ class Child(BaseModel):
 
 
 class AbsentReason(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     id: str
     name: str
@@ -52,8 +49,7 @@ class AbsentReason(BaseModel):
 
 
 class SchoolQRCodeInfo(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     translate: dict[str, str]
     child: dict[str, Child]

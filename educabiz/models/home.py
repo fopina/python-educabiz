@@ -8,8 +8,7 @@ from pydantic import BaseModel
 
 
 class Links(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     info: str
     clinical: str
@@ -25,8 +24,7 @@ class Links(BaseModel):
 
 
 class Notifications(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     message: str
     payment: str
@@ -37,8 +35,7 @@ class Notifications(BaseModel):
 
 
 class Child(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     name: str
     photo: str
@@ -53,8 +50,7 @@ class Child(BaseModel):
 
 
 class Home(BaseModel):
-    class Config:
-        extra = 'allow'
+    model_config = {'extra': 'allow'}
 
     translate: dict[str, str]
     schoolname: str
