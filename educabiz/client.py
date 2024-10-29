@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 import requests
 
-from educabiz.exceptions import LoginFailedError
+from educabiz.exceptions import LoginFailedError, LoginRequiredError
 from educabiz.models.school_qrcodeinfo import SchoolQRCodeInfo
 
 from .models.home import Home
@@ -21,15 +21,19 @@ class Client(requests.Session):
         if url[0] == '/':
             url = f'{self.URL}{url}'
         r = super().request(method, url, *a, **b)
-        if login_if_required and self._relogin:
+        # quick check
+        if 'https://mobile.educabiz.com/authenticate' in r.text:
+            # sure check
             try:
                 data = r.json()
             except Exception:
                 return r
             if data.get('formAction') == 'https://mobile.educabiz.com/authenticate':
-                self.login()
-                return super().request(method, url, *a, **b)
-
+                if login_if_required and self._relogin:
+                    self.login()
+                    return super().request(method, url, *a, **b)
+                else:
+                    raise LoginRequiredError()
         return r
 
     def login(self):
