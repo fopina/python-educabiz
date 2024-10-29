@@ -4,9 +4,10 @@
 
 from __future__ import annotations
 
+import html
 from typing import List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class PresenceItem(BaseModel):
@@ -14,6 +15,16 @@ class PresenceItem(BaseModel):
         extra = 'allow'
 
     id: str
+    notes: str = ''
+    absent: bool = False
+    hourOut: str = ''
+    hourIn: str = ''
+
+    @field_validator('hourOut', 'hourIn')
+    def parse_hours(cls, value):
+        if value == '--:--':
+            return ''
+        return value
 
 
 class Child(BaseModel):
@@ -23,6 +34,12 @@ class Child(BaseModel):
     id: str
     name: str
     presence: List[PresenceItem]
+
+    @field_validator('name')
+    def parse_name(cls, value):
+        if isinstance(value, str):
+            value = html.unescape(value)
+        return value
 
 
 class AbsentReason(BaseModel):
