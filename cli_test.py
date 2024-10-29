@@ -12,14 +12,14 @@ def cli():
     dotenv.load_dotenv()
     c = Client(os.getenv('EDUCA_USERNAME'), os.getenv('EDUCA_PASSWORD'), login_if_required=True)
     data = c.home()
-    print(f'School: {data["schoolname"]}')
+    print(f'School: {data.schoolname}')
     children = c.school_qrcodeinfo()['child']
     for child in children.values():
         child_id = child['id']
-        home_data = data['children'][child_id]
+        home_data = data.children[child_id]
         print(f'{child_id}:')
         print(f'* Name: {html.unescape(child["name"])}')
-        print(f'* Photo URL: {home_data["photo"]}')
+        print(f'* Photo URL: {home_data.photo}')
         presence = child['presence'][0]
         if presence['id'] == 'undefined':
             presence_str = '(none)'
