@@ -17,4 +17,4 @@ testpub:
 	twine upload --repository testpypi dist/*
 
 genmodel:
-	datamodel-codegen  --input temp.json --input-file-type json --output tmp_model.py --allow-extra-fields
+	datamodel-codegen  --input temp.json --input-file-type json --output tmp_model.py --allow-extra-fields --force-optional
