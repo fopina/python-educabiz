@@ -3,6 +3,9 @@ from datetime import date, datetime
 import requests
 
 from educabiz.exceptions import LoginFailedError
+from educabiz.models.school_qrcodeinfo import SchoolQRCodeInfo
+
+from .models.home import Home
 
 
 class Client(requests.Session):
@@ -42,7 +45,7 @@ class Client(requests.Session):
     def home(self):
         r = self.get('/educators/home')
         r.raise_for_status()
-        return r.json()
+        return Home.model_validate(r.json())
 
     def notifications(self):
         r = self.get('/educators/notifications')
@@ -92,7 +95,7 @@ class Client(requests.Session):
             '/school/qrcodeinfo',
         )
         r.raise_for_status()
-        return r.json()
+        return SchoolQRCodeInfo.model_validate(r.json())
 
     def _schoolctrl_save_presence(
         self,
