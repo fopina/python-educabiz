@@ -8,7 +8,7 @@ class Test(unittest.TestCase):
         p = PresenceItem.model_validate({'id': '123123', 'notes': 'nice', 'random': 'z', 'hourIn': '--:--'})
         self.assertEqual(p.id, '123123')
         self.assertEqual(p.notes, 'nice')
-        self.assertEqual(p.hourOut, '')
+        self.assertEqual(p.hourOut, None)
         self.assertEqual(p.hourIn, '')
         self.assertEqual(p.model_extra['random'], 'z')
 

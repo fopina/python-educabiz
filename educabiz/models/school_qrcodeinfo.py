@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 import html
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, field_validator
 
@@ -13,11 +13,11 @@ from pydantic import BaseModel, field_validator
 class PresenceItem(BaseModel):
     model_config = {'extra': 'allow'}
 
-    id: str
-    notes: str = ''
-    absent: bool = False
-    hourOut: str = ''
-    hourIn: str = ''
+    id: Optional[str] = None
+    notes: Optional[str] = None
+    absent: Optional[bool] = None
+    hourOut: Optional[str] = None
+    hourIn: Optional[str] = None
 
     @field_validator('hourOut', 'hourIn')
     def parse_hours(cls, value):
@@ -29,9 +29,9 @@ class PresenceItem(BaseModel):
 class Child(BaseModel):
     model_config = {'extra': 'allow'}
 
-    id: str
-    name: str
-    presence: List[PresenceItem]
+    id: Optional[str] = None
+    name: Optional[str] = None
+    presence: Optional[List[PresenceItem]] = None
 
     @field_validator('name')
     def parse_name(cls, value):
@@ -43,32 +43,32 @@ class Child(BaseModel):
 class AbsentReason(BaseModel):
     model_config = {'extra': 'allow'}
 
-    id: str
-    name: str
-    selected: str
+    id: Optional[str] = None
+    name: Optional[str] = None
+    selected: Optional[str] = None
 
 
 class SchoolQRCodeInfo(BaseModel):
     model_config = {'extra': 'allow'}
 
-    translate: dict[str, str]
-    child: dict[str, Child]
-    absentReasons: List[AbsentReason]
-    numChild: int
-    schoolDate: str
-    schoolhour: str
-    hasPresence: bool
-    hasQrenable: bool
-    qrdate: str
-    schoolslug: str
-    schoolId: str
-    presencein: str
-    presenceout: str
-    presencesingleurl: str
-    presencesinglenoteurl: str
-    absenturl: str
-    presenceinurl: str
-    presenceouturl: str
-    multiplePresence: int
-    locale: str
-    language: str
+    translate: Optional[dict[str, str]] = None
+    child: Optional[dict[str, Child]] = None
+    absentReasons: Optional[List[AbsentReason]] = None
+    numChild: Optional[int] = None
+    schoolDate: Optional[str] = None
+    schoolhour: Optional[str] = None
+    hasPresence: Optional[bool] = None
+    hasQrenable: Optional[bool] = None
+    qrdate: Optional[str] = None
+    schoolslug: Optional[str] = None
+    schoolId: Optional[str] = None
+    presencein: Optional[str] = None
+    presenceout: Optional[str] = None
+    presencesingleurl: Optional[str] = None
+    presencesinglenoteurl: Optional[str] = None
+    absenturl: Optional[str] = None
+    presenceinurl: Optional[str] = None
+    presenceouturl: Optional[str] = None
+    multiplePresence: Optional[int] = None
+    locale: Optional[str] = None
+    language: Optional[str] = None

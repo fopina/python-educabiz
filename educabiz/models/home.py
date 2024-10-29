@@ -4,66 +4,68 @@
 
 from __future__ import annotations
 
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class Links(BaseModel):
     model_config = {'extra': 'allow'}
 
-    info: str
-    clinical: str
-    inbox: str
-    outbox: str
-    payments: str
-    reportdaily: str
-    reportprogress: str
-    services: str
-    gallery: str
-    calendar: str
-    contacts: str
+    info: Optional[str] = None
+    clinical: Optional[str] = None
+    inbox: Optional[str] = None
+    outbox: Optional[str] = None
+    payments: Optional[str] = None
+    reportdaily: Optional[str] = None
+    reportprogress: Optional[str] = None
+    services: Optional[str] = None
+    gallery: Optional[str] = None
+    calendar: Optional[str] = None
+    contacts: Optional[str] = None
 
 
 class Notifications(BaseModel):
     model_config = {'extra': 'allow'}
 
-    message: str
-    payment: str
-    report: str
-    gallery: str
-    campain: str
-    event: str
+    message: Optional[str] = None
+    payment: Optional[str] = None
+    report: Optional[str] = None
+    gallery: Optional[str] = None
+    campain: Optional[str] = None
+    event: Optional[str] = None
 
 
 class Child(BaseModel):
     model_config = {'extra': 'allow'}
 
-    name: str
-    photo: str
-    school: str
-    links: Links
-    role: str
-    consult: bool
-    onlypresence: bool
-    notifications: Notifications
-    hasDailyReport: bool
-    hasProgressReport: bool
+    name: Optional[str] = None
+    photo: Optional[str] = None
+    school: Optional[str] = None
+    links: Optional[Links] = None
+    role: Optional[str] = None
+    consult: Optional[bool] = None
+    onlypresence: Optional[bool] = None
+    notifications: Optional[Notifications] = None
+    hasDailyReport: Optional[bool] = None
+    hasProgressReport: Optional[bool] = None
 
 
 class Home(BaseModel):
     model_config = {'extra': 'allow'}
 
-    translate: dict[str, str]
-    schoolname: str
-    showpayment: bool
-    children: dict[str, Child]
-    placardlink: str
-    userlink: str
-    uploadpic: str
-    rgpdWarning: bool
-    version: str
-    hasPresence: bool
-    hasQrenable: bool
-    qrlink: str
-    isOpen: bool
-    qrMode: int
-    schoolEdit: bool
+    translate: Optional[dict[str, str]] = None
+    schoolname: Optional[str] = None
+    showpayment: Optional[bool] = None
+    children: Optional[dict[str, Child]] = None
+    placardlink: Optional[str] = None
+    userlink: Optional[str] = None
+    uploadpic: Optional[str] = None
+    rgpdWarning: Optional[bool] = None
+    version: Optional[str] = None
+    hasPresence: Optional[bool] = None
+    hasQrenable: Optional[bool] = None
+    qrlink: Optional[str] = None
+    isOpen: Optional[bool] = None
+    qrMode: Optional[int] = None
+    schoolEdit: Optional[bool] = None
