@@ -21,6 +21,8 @@ class Client(requests.Session):
         if url[0] == '/':
             url = f'{self.URL}{url}'
         r = super().request(method, url, *a, **b)
+        if r.content.startswith(b'\xef\xbb\xbf'):
+            r.encoding = 'utf-8-sig'
         # quick check
         if 'https://mobile.educabiz.com/authenticate' in r.text:
             # sure check
