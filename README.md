@@ -10,13 +10,19 @@ pip install educabiz
 
 ## Usage
 
+### Using multiple schools  
 Educabiz does not provide a way to choose the school during login, matching the
-behavior of the Educabiz mobile app. The portal redirects to the right school
+behavior of the Educabiz mobile app.  
+
+The portal redirects to the right school
 based on the unique email/password combination, so when using multiple schools
 with the same email address, use the password associated with the intended
 school. If the same password is currently used for multiple schools, log in to
-the first school that opens and change the password there. The old password will
-then redirect to the other school.
+the first school that opens and change the password there.  
+
+The old password will then redirect to the other school.
+
+### Example
 
 ```python
 from educabiz.client import Client
