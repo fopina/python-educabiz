@@ -13,7 +13,7 @@ on:
       - dev-*
 
 jobs:
-  tests:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,11 +30,24 @@ jobs:
           uv sync --dev
 
       - name: Lint check
-        id: lint-check
-        # allow unit tests to run even if this fails
-        continue-on-error: true
         run: |
           make lint-check
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install uv
+          uv sync --dev
 
       - name: Run unit tests
         run: |
@@ -50,9 +63,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           report_type: test_results
-      
-      - name: Final check
-        if: ${{ steps.lint-check.outcome == 'failure' }}
-        run: |
-          echo Lint check failed, check its log
-          exit 1
