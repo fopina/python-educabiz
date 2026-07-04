@@ -1,9 +1,9 @@
 ## Build
 
-This project uses a `Pipfile`, so set up the virtualenv by running
+This project uses `uv`, so set up the virtualenv by running
 
 ```
-pipenv install --dev
+uv sync --dev
 ```
 
 Use `make test` to make sure all tests pass before pushing.

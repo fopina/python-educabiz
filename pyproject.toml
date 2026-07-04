@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0.0,<69.3.0"]
+requires = ["setuptools>=69.5.0,<80.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -10,6 +10,17 @@ description = "API client for *.educabiz.com "
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = ["requests", "pydantic"]
+
+[dependency-groups]
+dev = [
+    "datamodel-code-generator",
+    "pytest",
+    "pytest-cov",
+    "pytest-socket",
+    "python-dotenv",
+    "ruff",
+    "twine",
+]
 
 [project.urls]
 Homepage = "https://github.com/fopina/python-educabiz"

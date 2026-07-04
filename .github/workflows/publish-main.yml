@@ -12,5 +12,5 @@ jobs:
       # so easy to forget bumping the version to match the tag, just override it!
       version: ${{ github.ref_name }}
     secrets:
-      twine_username: ${{ secrets.PYPI_USERNAME }}
-      twine_password: ${{ secrets.PYPI_TOKEN }}
+      twine_token: ${{ secrets.PYPI_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

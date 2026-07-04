@@ -1,20 +1,22 @@
 lint:
-	ruff format
-	ruff check --fix
-	pyproject-pipenv --fix
+	uv run ruff format
+	uv run ruff check --fix
 
 lint-check:
-	ruff format --diff
-	ruff check
-	pyproject-pipenv
+	uv run ruff format --diff
+	uv run ruff check
 
 test:
-	python -m pytest --cov
+	if [ -n "$(GITHUB_RUN_ID)" ]; then \
+		uv run pytest --cov --cov-report=xml --junitxml=junit.xml -o junit_family=legacy; \
+	else \
+		uv run python -m pytest --cov; \
+	fi
 
 testpub:
 	rm -fr dist
-	pyproject-build
-	twine upload --repository testpypi dist/*
+	uv build
+	uv run twine upload --repository testpypi dist/*
 
 genmodel:
-	datamodel-codegen  --input temp.json --input-file-type json --output tmp_model.py --allow-extra-fields --force-optional
+	uv run datamodel-codegen  --input temp.json --input-file-type json --output tmp_model.py --allow-extra-fields --force-optional

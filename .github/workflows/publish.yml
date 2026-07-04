@@ -10,16 +10,31 @@ on:
         default: pypi
         type: string
     secrets:
-      twine_username:
+      twine_token:
         required: true
-      twine_password:
+      CODECOV_TOKEN:
+        required: false
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (for example: 1.2.3)'
+        type: string
         required: true
+      repository:
+        description: 'Package index repository'
+        type: choice
+        options:
+          - pypi
+          - testpypi
+        default: pypi
 
 run-name: publish to ${{ inputs.repository }}
 
 jobs:
   test:
     uses: ./.github/workflows/test.yml
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   publish:
     name: publish to ${{ inputs.repository }}
@@ -36,21 +51,18 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pipenv
-          pipenv requirements --dev > reqs.txt
-          pip install -r reqs.txt
+          pip install uv
+          uv sync --dev
       - name: force right version
         run: |
           .github/change_version.py --set '${{ inputs.version }}'
       - name: Build
-        run: pyproject-build
+        run: uv build
       - name: Publish
         env:
-          TWINE_USERNAME: ${{ secrets.twine_username }}
-          TWINE_PASSWORD: ${{ secrets.twine_password }}
-        run: |
-          pyproject-build
-          twine upload --repository ${{ inputs.repository }} dist/*
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.twine_token }}
+        run: uv run twine upload --verbose --repository ${{ inputs.repository }} dist/*
       - name: highlight
         run: |
           INDEX=""
