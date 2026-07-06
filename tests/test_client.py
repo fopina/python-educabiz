@@ -30,3 +30,21 @@ class Test(unittest.TestCase):
         response = c.get('/test')
 
         self.assertEqual(response.json(), {'status': 'ok'})
+
+    @mock.patch('educabiz.client.requests.Session.request')
+    def test_relogin_response_json_decodes_utf8_bom(self, request_mock):
+        login_required_response = requests.Response()
+        login_required_response._content = b'{"formAction": "https://mobile.educabiz.com/authenticate"}'
+        login_required_response.status_code = 200
+        login_response = requests.Response()
+        login_response._content = b'{"status": "ok"}'
+        login_response.status_code = 200
+        retried_response = requests.Response()
+        retried_response._content = b'\xef\xbb\xbf{"status": "ok"}'
+        retried_response.status_code = 200
+        request_mock.side_effect = [login_required_response, login_response, retried_response]
+
+        c = client.Client('x', 'y', login_if_required=True)
+        response = c.get('/test')
+
+        self.assertEqual(response.json(), {'status': 'ok'})
