@@ -20,9 +20,7 @@ class Client(requests.Session):
     def request(self, method, url, *a, login_if_required=True, **b):
         if url[0] == '/':
             url = f'{self.URL}{url}'
-        r = super().request(method, url, *a, **b)
-        if r.content.startswith(b'\xef\xbb\xbf'):
-            r.encoding = 'utf-8-sig'
+        r = self._normalize_response(super().request(method, url, *a, **b))
         # quick check
         if 'https://mobile.educabiz.com/authenticate' in r.text:
             # sure check
@@ -33,9 +31,14 @@ class Client(requests.Session):
             if data.get('formAction') == 'https://mobile.educabiz.com/authenticate':
                 if login_if_required and self._relogin:
                     self.login()
-                    return super().request(method, url, *a, **b)
+                    return self._normalize_response(super().request(method, url, *a, **b))
                 else:
                     raise LoginRequiredError()
+        return r
+
+    def _normalize_response(self, r):
+        if r.content.startswith(b'\xef\xbb\xbf'):
+            r.encoding = 'utf-8-sig'
         return r
 
     def login(self):
